@@ -14,7 +14,6 @@ class MainActivity : BaseActivity() , MainView{
         return R.layout.activity_main
     }
 
-
     override fun init() {
 
     }
