@@ -3,6 +3,7 @@ package com.lbw.jphoto.service
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.lbw.jphoto.Constant
 import com.lbw.jphoto.MyApplication
 
 import java.io.File
@@ -47,19 +48,19 @@ class ServiceFactory {
      * @return
     </S> */
     fun <S> createService(serviceClass: Class<S>): S {
-        var baseUrl = ""
-        try {
-            val field1 = serviceClass.getField("BASE_URL")
-            baseUrl = field1.get(serviceClass) as String
-        } catch (e: NoSuchFieldException) {
-            e.printStackTrace()
-        } catch (e: IllegalAccessException) {
-            e.message
-            e.printStackTrace()
-        }
+//        var baseUrl = ""
+//        try {
+//            val field1 = serviceClass.getField("BASE_URL")
+//            baseUrl = field1.get(serviceClass) as String
+//        } catch (e: NoSuchFieldException) {
+//            e.printStackTrace()
+//        } catch (e: IllegalAccessException) {
+//            e.message
+//            e.printStackTrace()
+//        }
 
         val retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Constant.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(mGsonDateFormat))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

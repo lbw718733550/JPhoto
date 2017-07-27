@@ -17,6 +17,7 @@ package com.lbw.jphoto.adapter
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.support.annotation.ColorInt
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -29,7 +30,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-
+import com.lbw.jphoto.service.ImageLoadUtil
 
 
 /**
@@ -95,23 +96,35 @@ class BaseViewHolder(itemView: View, internal var context: Context) : RecyclerVi
     }
 
     /**
-     * imageview  background
+     * view  backgroundResource
      * @param id
      * *
      * @param resouceId
      */
-    fun setbackgrounpResource(id: Int, resouceId: Int): ImageView {
-        val img = convertView.findViewById(id) as ImageView
-        img.setBackgroundResource(resouceId)
-        return img
+    fun <T:View>setbackgrounpResource(id: Int,resouceId: Int): T {
+        val view = convertView.findViewById(id) as T
+        view.setBackgroundResource(resouceId)
+        return view
+    }
+    /**
+     * view  backgroundColor
+     * @param id
+     * *
+     * @param resouceId
+     */
+    fun <T:View>setbackgrounpColor(id: Int,@ColorInt color:Int): T {
+        val view = convertView.findViewById(id) as T
+        view.setBackgroundColor(color)
+        return view
     }
 
 
     /**
      * imageview  imageloader  path
      */
-    fun setImageLoader(id: Int, imgPath: String): ImageView {
+    fun setImageLoader(id: Int, imgPath: String,color1:String,color2:String): ImageView {
         val img = convertView.findViewById(id) as ImageView
+        ImageLoadUtil.Imageload(context,imgPath,color1,color2,img)
         return img
 
     }

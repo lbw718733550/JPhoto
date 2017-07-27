@@ -7,7 +7,7 @@ import com.lzx.nickphoto.bean.PhotoInfo
  */
 interface MainView {
 
-    fun OnGetPhotoSuccese(result:List<PhotoInfo>)
+    fun OnGetPhotoSuccese(result:ArrayList<PhotoInfo>)
 
     fun showPro(isShow:Boolean)
 }
