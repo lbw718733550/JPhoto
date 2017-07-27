@@ -8,6 +8,7 @@ import com.lbw.jphoto.service.TransformUtils
 import com.lbw.jphoto.service.TransformUtils.main_io
 import com.lzx.nickphoto.bean.PhotoInfo
 import com.lzx.nickphoto.utils.network.PhotoServer
+import okhttp3.ResponseBody
 
 /**
  * Created by del on 17/7/26.
@@ -19,7 +20,7 @@ class MainModel {
         val per_page: Int = 15
     }
 
-    fun getAllPhotoList(page: Int,httpResult: HttpResultObserver<ArrayList<PhotoInfo>>) {
+    fun getAllPhotoList(page: Int,httpResult: HttpResultObserver<ResponseBody>) {
         ServiceFactory.instance.createService(PhotoServer::class.java)
                 .getAllPhoto(page, per_page)
                 .compose(TransformUtils.main_io())

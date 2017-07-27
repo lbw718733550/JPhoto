@@ -2,11 +2,12 @@ package com.lbw.jphoto.service
 
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import okhttp3.ResponseBody
 
 /**
  * Created by lin on 16/12/21.
  */
-abstract class HttpResultObserver<T> : Observer<HttpResult<T>> {
+abstract class HttpResultObserver<T> : Observer<ResponseBody> {
 
 
     override fun onError(e: Throwable?) {
@@ -30,16 +31,12 @@ abstract class HttpResultObserver<T> : Observer<HttpResult<T>> {
 
     }
 
-    override fun onNext(t: HttpResult<T>) {
+    override fun onNext(t: ResponseBody) {
         checkNotNull(t)
-        if (t.success) {
-            onSuccess(t.contentData, t.message)
-        } else {
-            _onError(Throwable("error=" + t.success))
-        }
+            onSuccess(t)
     }
 
-    abstract fun onSuccess(t: T?, message: String?)
+    abstract fun onSuccess(t: ResponseBody?)
 
     abstract fun _onError(e: Throwable)
 }
