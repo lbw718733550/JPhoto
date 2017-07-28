@@ -2,41 +2,33 @@ package com.lbw.jphoto.service
 
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import io.reactivex.observers.ResourceObserver
 import okhttp3.ResponseBody
 
 /**
  * Created by lin on 16/12/21.
  */
-abstract class HttpResultObserver<T> : Observer<ResponseBody> {
+abstract class HttpResultObserver<T> : ResourceObserver<ArrayList<T>>() {
 
 
     override fun onError(e: Throwable?) {
-        if (e != null) {
-            e.printStackTrace()
-            if (e.message == null) {
-                _onError(Throwable(e.toString()))
-            } else {
-                _onError(Throwable(e.message))
-            }
-        } else {
-            _onError(Exception("null message"))
-        }
+                _onError(e!!)
     }
 
     override fun onComplete() {
-
+    }
+    override fun onStart() {
+        super.onStart()
+        _onStart()
     }
 
-    override fun onSubscribe(d: Disposable) {
 
+    override fun onNext(t: ArrayList<T>?) {
+            onSuccess(t!!)
     }
 
-    override fun onNext(t: ResponseBody) {
-        checkNotNull(t)
-            onSuccess(t)
-    }
-
-    abstract fun onSuccess(t: ResponseBody?)
-
+    abstract fun onSuccess(t: ArrayList<T>?)
     abstract fun _onError(e: Throwable)
+    abstract fun _onStart()
+
 }

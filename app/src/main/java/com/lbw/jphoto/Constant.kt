@@ -8,6 +8,6 @@ import java.util.Calendar
  */
 object Constant {
 
-    val BASE_URL = "http://service.my-school.cn:51323/"
+    val BASE_URL = "https://api.unsplash.com/"
 
 }

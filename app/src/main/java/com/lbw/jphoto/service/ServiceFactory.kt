@@ -35,7 +35,7 @@ class ServiceFactory {
 
     companion object{
         val instance : ServiceFactory by lazy { SingletonHolder.INSTANCE }
-        private val DEFAULT_TIMEOUT: Long = 10
+        private val DEFAULT_TIMEOUT: Long = 100
     }
 
     /**

@@ -8,6 +8,6 @@ import com.lzx.nickphoto.bean.PhotoInfo
  */
 interface MainPresenter {
 
-    fun  getAllPhotoList()
+    fun  getAllPhotoList(isShow:Boolean)
     fun  loadMorePhotoList()
 }

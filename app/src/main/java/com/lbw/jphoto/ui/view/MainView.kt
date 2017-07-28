@@ -9,5 +9,7 @@ interface MainView {
 
     fun OnGetPhotoSuccese(result:ArrayList<PhotoInfo>)
 
-    fun showPro(isShow:Boolean)
+    fun loadMoreSuccess(result:ArrayList<PhotoInfo>)
+
+    fun OnError(e:Throwable)
 }

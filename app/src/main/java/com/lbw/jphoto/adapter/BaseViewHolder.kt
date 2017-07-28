@@ -36,7 +36,7 @@ import com.lbw.jphoto.service.ImageLoadUtil
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
  */
-class BaseViewHolder(itemView: View, internal var context: Context) : RecyclerView.ViewHolder(itemView) {
+class BaseViewHolder(itemView: View, internal var context: Context ,var tag:String?=null) : RecyclerView.ViewHolder(itemView) {
     var convertView: View
         internal set
     private val views: SparseArray<View>
@@ -45,6 +45,7 @@ class BaseViewHolder(itemView: View, internal var context: Context) : RecyclerVi
         this.convertView = itemView
         this.views = SparseArray<View>()
     }
+
 
 
     fun <T : View> setViewBind(viewId: Int): T {
