@@ -7,8 +7,8 @@ import com.lbw.jphoto.service.HttpResultObserver
 import com.lbw.jphoto.service.ServiceFactory
 import com.lbw.jphoto.service.TransformUtils
 import com.lbw.jphoto.service.TransformUtils.main_io
-import com.lzx.nickphoto.bean.PhotoInfo
-import com.lzx.nickphoto.utils.network.PhotoServer
+import com.lbw.jphoto.bean.PhotoInfo
+import com.lbw.jphoto.utils.network.PhotoServer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Response

@@ -1,6 +1,7 @@
 package com.lbw.jphoto.ui.view
 
-import com.lzx.nickphoto.bean.PhotoInfo
+import com.lbw.jphoto.bean.PhotoInfo
+
 
 /**
  * Created by del on 17/7/26.

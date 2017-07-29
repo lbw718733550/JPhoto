@@ -1,4 +1,4 @@
-package com.lzx.nickphoto.widget
+package com.lbw.jphoto.widget
 
 import android.content.Context
 import android.content.res.TypedArray

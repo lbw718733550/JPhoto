@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.PhotoDetailActivity">
 
-    <com.lzx.nickphoto.widget.ParallaxScrollView
-        android:id="@+id/scrollView"
+    <com.lbw.jphoto.widget.ParallaxScrollView
+        android:id="@+id/myscrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -30,6 +30,6 @@
 
         </LinearLayout>
 
-    </com.lzx.nickphoto.widget.ParallaxScrollView>
+    </com.lbw.jphoto.widget.ParallaxScrollView>
 
 </RelativeLayout>

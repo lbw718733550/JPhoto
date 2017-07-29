@@ -1,4 +1,4 @@
-package com.lzx.nickphoto.bean
+package com.lbw.jphoto.bean
 
 import android.os.Parcel
 import android.os.Parcelable

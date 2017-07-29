@@ -8,7 +8,7 @@ import com.lbw.jphoto.ui.Presenter.MainPresenter
 import com.lbw.jphoto.ui.model.MainModel
 import com.lbw.jphoto.ui.view.MainView
 import com.lbw.jphoto.utils.ToastUtil
-import com.lzx.nickphoto.bean.PhotoInfo
+import com.lbw.jphoto.bean.PhotoInfo
 import okhttp3.ResponseBody
 import org.json.JSONArray
 

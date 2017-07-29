@@ -1,8 +1,8 @@
-package com.lzx.nickphoto.utils.network
+package com.lbw.jphoto.utils.network
 
 import com.lbw.jphoto.Constant
 import com.lbw.jphoto.service.HttpResult
-import com.lzx.nickphoto.bean.PhotoInfo
+import com.lbw.jphoto.bean.PhotoInfo
 import io.reactivex.Observable
 import okhttp3.Response
 import okhttp3.ResponseBody

@@ -12,6 +12,7 @@ import java.io.Serializable
  */
 abstract class BaseActivity : AppCompatActivity() {
 
+    lateinit var instance:Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,7 @@ abstract class BaseActivity : AppCompatActivity() {
             throw RuntimeException("layout resId undefind")
         }
         setContentView(setContentViewId())
+        instance = this
         init()
     }
 
