@@ -8,7 +8,7 @@ import okhttp3.ResponseBody
 /**
  * Created by lin on 16/12/21.
  */
-abstract class HttpResultObserver<T> : ResourceObserver<ArrayList<T>>() {
+abstract class HttpResultObserver<T> : ResourceObserver<T>() {
 
 
     override fun onError(e: Throwable?) {
@@ -23,11 +23,11 @@ abstract class HttpResultObserver<T> : ResourceObserver<ArrayList<T>>() {
     }
 
 
-    override fun onNext(t: ArrayList<T>?) {
+    override fun onNext(t: T?) {
             onSuccess(t!!)
     }
 
-    abstract fun onSuccess(t: ArrayList<T>?)
+    abstract fun onSuccess(t:T?)
     abstract fun _onError(e: Throwable)
     abstract fun _onStart()
 

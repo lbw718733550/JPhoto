@@ -8,6 +8,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.lbw.jphoto.widget.CircleImageView
 import java.lang.Exception
 
 /**
@@ -15,7 +16,7 @@ import java.lang.Exception
  */
 object ImageLoadUtil {
 
-    fun Imageload(context:Context,path:String ,color1:String,color2:String,imageView:ImageView)
+    fun Imageload(context:Context, path:String, color1:String, color2: String, imageView:ImageView)
     {
         Glide.with(context).load(path)
                 .placeholder(Color.parseColor(color1))

@@ -18,10 +18,7 @@ package com.lbw.jphoto.adapter
 import android.content.Context
 import android.graphics.Bitmap
 import android.support.annotation.ColorInt
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.SparseArray
 import android.view.View
 import android.view.animation.Animation

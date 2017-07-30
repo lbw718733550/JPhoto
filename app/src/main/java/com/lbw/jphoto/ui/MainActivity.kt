@@ -22,6 +22,7 @@ import com.lbw.jphoto.ui.Presenter.impl.MainPresenterImpl
 import com.lbw.jphoto.ui.model.MainModel
 import com.lbw.jphoto.ui.view.MainView
 import com.lbw.jphoto.utils.ToastUtil
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -32,12 +33,16 @@ class MainActivity : BaseActivity() , MainView{
     }
 
     lateinit var mPresenter:MainPresenterImpl
+    lateinit var mRxPermissions:RxPermissions
 
     lateinit var mAdapter:Recycle_MainAdapter
     var lastVisibleItem:Int?=null
     var mList:ArrayList<PhotoInfo> = ArrayList()
+
+
     override fun init() {
         mPresenter = MainPresenterImpl(this)
+        mRxPermissions = RxPermissions(this)
         listInit()
         mPresenter.getAllPhotoList(true)
 

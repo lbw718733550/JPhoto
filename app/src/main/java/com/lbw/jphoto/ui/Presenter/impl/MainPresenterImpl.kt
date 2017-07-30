@@ -22,7 +22,7 @@ class MainPresenterImpl (val mView:MainView): MainPresenter{
     var isMore: Boolean = false
 
     override fun getAllPhotoList(isShow:Boolean) {
-        mModel.getAllPhotoList(page,object : HttpResultObserver<PhotoInfo>() {
+        mModel.getAllPhotoList(page,object : HttpResultObserver<ArrayList<PhotoInfo>>() {
             override fun _onStart() {
             }
             override fun onSuccess(result: ArrayList<PhotoInfo>?) {
@@ -38,7 +38,7 @@ class MainPresenterImpl (val mView:MainView): MainPresenter{
     override fun loadMorePhotoList() {
         if (isMore) {
             page++
-            mModel.getAllPhotoList(page,object : HttpResultObserver<PhotoInfo>() {
+            mModel.getAllPhotoList(page,object : HttpResultObserver<ArrayList<PhotoInfo>>() {
                 override fun _onStart() {
                 }
                 override fun onSuccess(t: ArrayList<PhotoInfo>?) {

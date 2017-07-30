@@ -25,7 +25,7 @@ class MainModel {
         val per_page: Int = 15
     }
 
-    fun getAllPhotoList(page: Int,httpResult: HttpResultObserver<PhotoInfo>) {
+    fun getAllPhotoList(page: Int,httpResult: HttpResultObserver<ArrayList<PhotoInfo>>) {
         ServiceFactory.instance.createService(PhotoServer::class.java)
                 .getAllPhoto(page, per_page)
                 .subscribeOn(Schedulers.io())

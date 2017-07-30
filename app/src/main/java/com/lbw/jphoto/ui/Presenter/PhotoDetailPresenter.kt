@@ -1,5 +1,6 @@
 package com.lbw.jphoto.ui.Presenter
 
+import android.view.View
 import com.lbw.jphoto.service.HttpResultObserver
 import com.lbw.jphoto.bean.PhotoInfo
 
@@ -8,6 +9,7 @@ import com.lbw.jphoto.bean.PhotoInfo
  */
 interface PhotoDetailPresenter {
 
-    fun  getAllPhotoList(isShow:Boolean)
-    fun  loadMorePhotoList()
+    fun  getPhotoDetail(photoId:String)
+    fun  getPhotoStatistics(photoId:String)
+
 }

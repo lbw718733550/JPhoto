@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by lin on 16/12/21.
  */
-object TransformUtils {
+object TransformUtils{
 
 
     fun <T> main_io(): ObservableTransformer<T, T> {
