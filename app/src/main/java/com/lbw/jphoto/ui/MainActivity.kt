@@ -60,7 +60,7 @@ class MainActivity : BaseActivity() , MainView{
 
         //RecycleView
         recycle_view.setHasFixedSize(true)
-        recycle_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recycle_view.layoutManager = LinearLayoutManager(this)
         mAdapter = Recycle_MainAdapter(this, R.layout.item_main_photo, R.layout.item_footview, mList)
         recycle_view.adapter = mAdapter
 
@@ -77,9 +77,8 @@ class MainActivity : BaseActivity() , MainView{
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                var lastPositions = intArrayOf(((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).getSpanCount());
 
-                lastVisibleItem = ((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).findLastVisibleItemPositions(lastPositions)
+                lastVisibleItem = ((recyclerView!!.layoutManager) as LinearLayoutManager).findLastVisibleItemPosition()
             }
         })
 
