@@ -107,7 +107,7 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
             detail_download, detail_download_text -> ToastUtil.showSnackBar(this, detail_size, "下载次数：" + detail_download.text)
             btn_share -> shareMsg()
             btn_wallpaper -> setWallpaper()
-
+            btnBack -> baseFinish()
         }
     }
 
@@ -163,7 +163,7 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
                     }
                     return@filter true
                 }
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     val downloadDialog: DownloadDialog = DownloadDialog()
@@ -196,22 +196,20 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
      * 设置壁纸
      */
     fun setWallpaper() {
-        val dialog: ProDialog = ProDialog()
-        dialog.show(supportFragmentManager, "ProDialog")
-
+        showLoadingDialog()
         Glide.with(this).load(mPhotoInfo.urls.regular).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(object : SimpleTarget<Bitmap>() {
                     override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
-                        dialog.dismiss()
                         mWallpaperManager.setBitmap(resource)
+                        dismissDialog()
                         ToastUtil.showSnackBar(this@PhotoDetailActivity, btn_wallpaper, "设置壁纸成功")
                     }
 
                     override fun onDestroy() {
                         super.onDestroy()
                         ToastUtil.show(this@PhotoDetailActivity, "设置壁纸已取消")
-                        dialog.dismiss()
+                        dismissDialog()
                     }
                 })
     }

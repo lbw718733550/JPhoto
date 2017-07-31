@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import com.lbw.jphoto.utils.LoadingDialog
 import java.io.Serializable
 
 /**
@@ -13,6 +14,7 @@ import java.io.Serializable
 abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var instance:Context
+    private var waittingDialog: LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,5 +84,20 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun baseFinish(){
         finish()
+    }
+
+    /**
+     * 显示等候对话框
+     */
+    fun showLoadingDialog() {
+        waittingDialog = LoadingDialog(this)
+        waittingDialog!!.show()
+    }
+
+    /**
+     * 隐藏等候对话框
+     */
+    fun dismissDialog() {
+            waittingDialog!!.dismiss()
     }
 }

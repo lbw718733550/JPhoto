@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llyt_loading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <!--<ProgressBar-->
+            <!--android:layout_width="30dip"-->
+            <!--android:layout_height="30dip"-->
+            <!--android:indeterminateDrawable="@drawable/loading_progressbar" />-->
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/anim_loding"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:indicatorName="BallPulseIndicator"
+            app:indicatorColor="@color/colorAccent"
+            android:visibility="visible" />
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+</LinearLayout>

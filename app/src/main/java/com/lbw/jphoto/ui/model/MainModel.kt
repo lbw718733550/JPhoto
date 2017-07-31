@@ -20,7 +20,6 @@ import org.json.JSONArray
  */
 class MainModel {
 
-
     companion object {   //companion object  包裹的内容是静态的
         val per_page: Int = 15
     }
