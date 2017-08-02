@@ -12,18 +12,18 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shadow_gradient_reserve"/>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@drawable/shadow_gradient_reserve"/>-->
 
     <TextView
         android:id="@+id/image_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="15dp"
+        android:padding="10dp"
         android:text="dasdas"
         android:textColor="@color/white_alpha_80"
         android:textSize="14sp"/>

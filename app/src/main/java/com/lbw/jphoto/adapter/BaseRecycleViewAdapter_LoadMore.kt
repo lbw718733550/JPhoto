@@ -36,8 +36,8 @@ abstract class BaseRecycleViewAdapter_LoadMore<T>(private val context: Context, 
     val LOADING_MORE = 1
     //加载完毕没有更多数据
     val NO_MORE_LOADING = 2
-    //上拉加载更多状态-默认为0
-    var load_more_status = 0
+    //上拉加载更多状态-默认为2
+    var load_more_status = 2
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {

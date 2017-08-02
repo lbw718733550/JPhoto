@@ -13,4 +13,5 @@ interface MainView {
     fun loadMoreSuccess(result:ArrayList<PhotoInfo>)
 
     fun OnError(e:Throwable)
+
 }

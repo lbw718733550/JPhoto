@@ -163,7 +163,7 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
                     }
                     return@filter true
                 }
-                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     val downloadDialog: DownloadDialog = DownloadDialog()

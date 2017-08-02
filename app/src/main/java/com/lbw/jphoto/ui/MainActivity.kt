@@ -22,6 +22,7 @@ import com.lbw.jphoto.ui.view.MainView
 import com.lbw.jphoto.utils.FileUtil
 import com.lbw.jphoto.utils.ToastUtil
 import com.lbw.jphoto.widget.DownloadDialog
+import com.lbw.jphoto.widget.LoadMoreRecycleView
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity() , MainView{
         mPresenter = MainPresenterImpl(this)
         mRxPermissions = RxPermissions(this)
         listInit()
+        showLoadingDialog()
         mPresenter.getAllPhotoList(true)
 
     }
@@ -60,11 +62,24 @@ class MainActivity : BaseActivity() , MainView{
 
         //RecycleView
         recycle_view.setHasFixedSize(true)
-        recycle_view.layoutManager = LinearLayoutManager(this)
+//        recycle_view.layoutManager = LinearLayoutManager(this)
+        var staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE)
+        recycle_view.layoutManager = staggeredGridLayoutManager
         mAdapter = Recycle_MainAdapter(this, R.layout.item_main_photo, R.layout.item_footview, mList)
         recycle_view.adapter = mAdapter
 
-        //加载更多
+//        /*
+//         * 滚到最后 加载更多
+//         */
+//        recycle_view.setLoadingData(object :LoadMoreRecycleView.LoadingData{
+//            override fun onLoadMore() {
+//                mAdapter.changeMoreStatus(mAdapter.LOADING_MORE)
+//                mPresenter.loadMorePhotoList()
+//            }
+//        })
+
+        //加载更多  已使用自定义的recycleView，如果没有要加这段
         recycle_view.setOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -76,9 +91,14 @@ class MainActivity : BaseActivity() , MainView{
             }
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
-
-                lastVisibleItem = ((recyclerView!!.layoutManager) as LinearLayoutManager).findLastVisibleItemPosition()
+                var into  = IntArray(((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).spanCount)
+                var lastPositions : IntArray = ((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).findLastVisibleItemPositions(into)
+                lastVisibleItem = lastPositions[0]
+                for (value in lastPositions) {
+                    if (value > lastVisibleItem!!) {
+                        lastVisibleItem = value
+                    }
+                }
             }
         })
 
@@ -143,6 +163,9 @@ class MainActivity : BaseActivity() , MainView{
      * 获取数据成功
      */
     override fun OnGetPhotoSuccese(result: ArrayList<PhotoInfo>) {
+        //修改列表是否加载更多
+        mAdapter.changeMoreStatus(mAdapter.PULLUP_LOAD_MORE)
+        dismissDialog()
         refresh_layout.isRefreshing = false
         mList.addAll(result)
         mAdapter.updaterall(result)
@@ -165,8 +188,8 @@ class MainActivity : BaseActivity() , MainView{
 
     override fun OnError(e: Throwable) {
         ToastUtil.show(MyApplication.instance,e.toString())
+        dismissDialog()
     }
-
 
 
 
