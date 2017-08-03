@@ -45,6 +45,8 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
      lateinit var photoUrl: String
      lateinit var photoColor: String
      lateinit var mPhotoInfo: PhotoInfo
+     lateinit var bitmap:Bitmap
+
      lateinit var mWallpaperManager: WallpaperManager  //壁纸管理器
 
     lateinit var mPresenter: PhotoDrtailPersenterImpl
@@ -57,11 +59,16 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
         photoId = intent.getStringExtra("photoId")
         photoUrl = intent.getStringExtra("photoUrl")
         photoColor = intent.getStringExtra("photoColor")
+        bitmap = intent.getBundleExtra("bitmap").getParcelable<Bitmap>("bitmap")
+
+        //加载图片
+//        ImageLoadUtil.ImageloadWithListener(this,photoUrl,photoColor,photoColor,image_photo)
+        image_photo.setImageBitmap(bitmap)
 
         mWallpaperManager = WallpaperManager.getInstance(this)
 
 
-        btnBack.setOnClickListener { finishActivity(0) }
+        btnBack.setOnClickListener (this)
         detail_size.setOnClickListener(this)
         detail_time.setOnClickListener(this)
         detail_color.setOnClickListener(this)
@@ -85,8 +92,7 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
                 image_photo.scrollTo(x, -y / 3)
             }
         })
-        //加载图片
-        ImageLoadUtil.ImageloadWithListener(this,photoUrl,photoColor,photoColor,image_photo)
+
         mPresenter.getPhotoDetail(photoId)
         mPresenter.getPhotoStatistics(photoId)
     }
@@ -105,9 +111,9 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
             detail_likes, detail_likes_text -> ToastUtil.showSnackBar(this, detail_likes, "喜欢：" + detail_likes.text)
             detail_see, detail_see_text -> ToastUtil.showSnackBar(this, detail_see, "浏览次数：" + detail_see.text)
             detail_download, detail_download_text -> ToastUtil.showSnackBar(this, detail_size, "下载次数：" + detail_download.text)
+            btnBack -> baseFinish()
             btn_share -> shareMsg()
             btn_wallpaper -> setWallpaper()
-            btnBack -> baseFinish()
         }
     }
 
@@ -208,7 +214,6 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
 
                     override fun onDestroy() {
                         super.onDestroy()
-                        ToastUtil.show(this@PhotoDetailActivity, "设置壁纸已取消")
                         dismissDialog()
                     }
                 })

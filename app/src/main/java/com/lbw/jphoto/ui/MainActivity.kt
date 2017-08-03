@@ -2,6 +2,7 @@ package com.lbw.jphoto.ui
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -63,44 +64,44 @@ class MainActivity : BaseActivity() , MainView{
         //RecycleView
         recycle_view.setHasFixedSize(true)
 //        recycle_view.layoutManager = LinearLayoutManager(this)
-        var staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE)
-        recycle_view.layoutManager = staggeredGridLayoutManager
+//        var staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE)
+        recycle_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         mAdapter = Recycle_MainAdapter(this, R.layout.item_main_photo, R.layout.item_footview, mList)
         recycle_view.adapter = mAdapter
 
-//        /*
-//         * 滚到最后 加载更多
-//         */
-//        recycle_view.setLoadingData(object :LoadMoreRecycleView.LoadingData{
-//            override fun onLoadMore() {
-//                mAdapter.changeMoreStatus(mAdapter.LOADING_MORE)
-//                mPresenter.loadMorePhotoList()
-//            }
-//        })
-
-        //加载更多  已使用自定义的recycleView，如果没有要加这段
-        recycle_view.setOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                //滚动到最后一个的时候 加载更多
-                if (newState === RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem!! + 1 === mAdapter.getItemCount()) {
-                    mAdapter.changeMoreStatus(mAdapter.LOADING_MORE)
-                    mPresenter.loadMorePhotoList()
-                }
-            }
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                var into  = IntArray(((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).spanCount)
-                var lastPositions : IntArray = ((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).findLastVisibleItemPositions(into)
-                lastVisibleItem = lastPositions[0]
-                for (value in lastPositions) {
-                    if (value > lastVisibleItem!!) {
-                        lastVisibleItem = value
-                    }
-                }
+        /*
+         * 滚到最后 加载更多
+         */
+        recycle_view.setLoadingData(object :LoadMoreRecycleView.LoadingData{
+            override fun onLoadMore() {
+                mAdapter.changeMoreStatus(mAdapter.LOADING_MORE)
+                mPresenter.loadMorePhotoList()
             }
         })
+
+//        //加载更多  已使用自定义的recycleView，如果没有要加这段
+//        recycle_view.setOnScrollListener(object : RecyclerView.OnScrollListener(){
+//            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+//                super.onScrollStateChanged(recyclerView, newState)
+//                //滚动到最后一个的时候 加载更多
+//                if (newState === RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem!! + 1 === mAdapter.getItemCount()) {
+//                    mAdapter.changeMoreStatus(mAdapter.LOADING_MORE)
+//                    mPresenter.loadMorePhotoList()
+//                }
+//            }
+//            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                var into  = IntArray(((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).spanCount)
+//                var lastPositions : IntArray = ((recyclerView!!.layoutManager) as StaggeredGridLayoutManager).findLastVisibleItemPositions(into)
+//                lastVisibleItem = lastPositions[0]
+//                for (value in lastPositions) {
+//                    if (value > lastVisibleItem!!) {
+//                        lastVisibleItem = value
+//                    }
+//                }
+//            }
+//        })
 
 
         mAdapter.setOnItemClickListner(object:BaseRecycleViewAdapter_LoadMore.OnItemClickListner<PhotoInfo>{
@@ -110,10 +111,13 @@ class MainActivity : BaseActivity() , MainView{
 
         mAdapter.setonMyClickListener(object :Recycle_MainAdapter.OnMyClickListener{
             //图片点击
-            override fun onImageViewClick(v: View, position: Int, bean: PhotoInfo) {
+            override fun onImageViewClick(v: View, position: Int, bean: PhotoInfo,photmBitmap: Bitmap) {
                 val intent: Intent = Intent(instance, PhotoDetailActivity::class.java)
                 intent.putExtra("photoId", bean.id)
                 intent.putExtra("photoUrl", bean.urls.small)
+                var bundle:Bundle = Bundle()
+                bundle.putParcelable("bitmap",photmBitmap)
+                intent.putExtra("bitmap",bundle)
                 intent.putExtra("photoColor", bean.color)
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     instance.startActivity(intent)

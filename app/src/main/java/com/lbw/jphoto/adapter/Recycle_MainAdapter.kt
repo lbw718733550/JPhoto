@@ -1,10 +1,13 @@
 package com.lbw.jphoto.adapter
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.SimpleTarget
 import com.lbw.jphoto.R
 import com.lbw.jphoto.bean.PhotoInfo
 
@@ -28,11 +31,17 @@ class Recycle_MainAdapter( context: Context, layoutId: Int,footviewlayoutId:Int,
 
     override fun convert(holder: BaseViewHolder, position: Int, bean: PhotoInfo) {
         holder.setbackgrounpColor<RelativeLayout>(R.id.root_layout,Color.parseColor(bean.color))
-        var photoImaage:ImageView = holder.setImageLoader(R.id.image_photo,bean.urls.small,bean.color,bean.color)
-
+        var photoImaage:ImageView = holder.getView(R.id.image_photo)
+        var photmBitmap:Bitmap ?= null
+        holder.setImageLoader(R.id.image_photo,bean.urls.small,bean.color,bean.color,object :SimpleTarget<Bitmap>(){
+            override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
+                photoImaage.setImageBitmap(resource)
+                photmBitmap = resource!!
+            }
+        })
         photoImaage.setOnClickListener {
             if (onMyClickListener!=null) {
-                onMyClickListener.onImageViewClick(photoImaage,position,bean)
+                onMyClickListener.onImageViewClick(photoImaage,position,bean, photmBitmap!!)
             }
         }
 
@@ -50,7 +59,7 @@ class Recycle_MainAdapter( context: Context, layoutId: Int,footviewlayoutId:Int,
     }
 
     interface OnMyClickListener{
-        fun onImageViewClick(v:View,position: Int, bean: PhotoInfo)
+        fun onImageViewClick(v:View,position: Int, bean: PhotoInfo,photmBitmap:Bitmap)
         fun onDownClick(v:View,position: Int, bean: PhotoInfo)
     }
 }

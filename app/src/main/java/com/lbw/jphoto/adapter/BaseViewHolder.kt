@@ -27,6 +27,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.request.target.SimpleTarget
 import com.lbw.jphoto.service.ImageLoadUtil
 
 
@@ -123,6 +124,16 @@ class BaseViewHolder(itemView: View, internal var context: Context ,var tag:Stri
     fun setImageLoader(id: Int, imgPath: String,color1:String,color2:String): ImageView {
         val img = convertView.findViewById(id) as ImageView
         ImageLoadUtil.Imageload(context,imgPath,color1,color2,img)
+        return img
+
+    }
+    /**
+     * imageview  imageloader  path
+     */
+    fun setImageLoader(id: Int, imgPath: String,color1:String,color2:String,simpleTarget: SimpleTarget<Bitmap>): ImageView {
+        val img = convertView.findViewById(id) as ImageView
+//        ImageLoadUtil.Imageload(context,imgPath,color1,color2,img)
+        ImageLoadUtil.ImageLoadResultBitmap(context,imgPath,color1,color2,img,simpleTarget)
         return img
 
     }
