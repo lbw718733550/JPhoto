@@ -9,6 +9,8 @@ import com.lbw.jphoto.ui.model.MainModel
 import com.lbw.jphoto.ui.view.MainView
 import com.lbw.jphoto.utils.ToastUtil
 import com.lbw.jphoto.bean.PhotoInfo
+import com.trello.rxlifecycle2.LifecycleTransformer
+import io.reactivex.annotations.NonNull
 import okhttp3.ResponseBody
 import org.json.JSONArray
 
@@ -21,8 +23,8 @@ class MainPresenterImpl (val mView:MainView): MainPresenter{
     var mModel:MainModel = MainModel()
     var isMore: Boolean = false
 
-    override fun getAllPhotoList(isShow:Boolean) {
-        mModel.getAllPhotoList(page,object : HttpResultObserver<ArrayList<PhotoInfo>>() {
+    override fun getAllPhotoList(isShow:Boolean ,@NonNull transformer: LifecycleTransformer<ArrayList<PhotoInfo>>) {
+        mModel.getAllPhotoList(page,transformer,object : HttpResultObserver<ArrayList<PhotoInfo>>() {
             override fun _onStart() {
             }
             override fun onSuccess(result: ArrayList<PhotoInfo>?) {
@@ -35,10 +37,10 @@ class MainPresenterImpl (val mView:MainView): MainPresenter{
         })
     }
 
-    override fun loadMorePhotoList() {
+    override fun loadMorePhotoList( @NonNull transformer: LifecycleTransformer<ArrayList<PhotoInfo>>) {
         if (isMore) {
             page++
-            mModel.getAllPhotoList(page,object : HttpResultObserver<ArrayList<PhotoInfo>>() {
+            mModel.getAllPhotoList(page,transformer,object : HttpResultObserver<ArrayList<PhotoInfo>>() {
                 override fun _onStart() {
                 }
                 override fun onSuccess(t: ArrayList<PhotoInfo>?) {

@@ -2,16 +2,18 @@ package com.lbw.jphoto.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import com.lbw.jphoto.utils.LoadingDialog
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import java.io.Serializable
 
 /**
  * Created by del on 17/7/26.
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : RxAppCompatActivity() {
 
     lateinit var instance:Context
     private var waittingDialog: LoadingDialog? = null
@@ -34,7 +36,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) { // 返回键
-            baseFinish()
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                baseFinish()
+            } else {
+                finishAfterTransition()
+            }
         } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             return false
         } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {

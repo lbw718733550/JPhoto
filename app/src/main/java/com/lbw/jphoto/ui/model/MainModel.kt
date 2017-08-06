@@ -9,6 +9,7 @@ import com.lbw.jphoto.service.TransformUtils
 import com.lbw.jphoto.service.TransformUtils.main_io
 import com.lbw.jphoto.bean.PhotoInfo
 import com.lbw.jphoto.utils.network.PhotoServer
+import com.trello.rxlifecycle2.LifecycleTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Response
@@ -24,11 +25,12 @@ class MainModel {
         val per_page: Int = 15
     }
 
-    fun getAllPhotoList(page: Int,httpResult: HttpResultObserver<ArrayList<PhotoInfo>>) {
+    fun getAllPhotoList(page: Int, @NonNull transformer: LifecycleTransformer<ArrayList<PhotoInfo>>, @NonNull httpResult: HttpResultObserver<ArrayList<PhotoInfo>>) {
         ServiceFactory.instance.createService(PhotoServer::class.java)
                 .getAllPhoto(page, per_page)
-                .subscribeOn(Schedulers.io())
+                .compose(transformer)
                 .unsubscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(httpResult)
     }

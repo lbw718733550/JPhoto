@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
@@ -19,20 +20,23 @@ import java.lang.Exception
  */
 object ImageLoadUtil {
 
-    fun Imageload(context:Context, path:String, color1:String, color2: String, imageView:ImageView)
+    fun Imageload(glide: RequestManager, path:String, color1:String, color2: String, imageView:ImageView)
     {
-        Glide.with(context).load(path)
-                .placeholder(Color.parseColor(color1))
-                .error(Color.parseColor(color2))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView)
+        try {
+            glide.load(path)
+                    .placeholder(Color.parseColor(color1))
+                    .error(Color.parseColor(color2))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView)
+        } catch(e: Exception) {
+        }
     }
 
 
-    fun ImageloadWithListener(context:Context,path:String ,color1:String,color2:String,imageView:ImageView)
+    fun ImageloadWithListener(glide: RequestManager,path:String ,color1:String,color2:String,imageView:ImageView)
     {
         var color:Int = Color.parseColor(color1)
-        Glide.with(context).load(path)
+        glide.load(path)
                 .placeholder(color)
                 .error(Color.parseColor(color2))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -49,8 +53,8 @@ object ImageLoadUtil {
                 .into(imageView)
     }
 
-    fun ImageLoadResultBitmap(context:Context, path:String, color1:String, color2: String, imageView:ImageView,simpleTarget:SimpleTarget<Bitmap>){
-        Glide.with(context).load(path).asBitmap()
+    fun ImageLoadResultBitmap(glide: RequestManager, path:String, color1:String, color2: String, imageView:ImageView,simpleTarget:SimpleTarget<Bitmap>){
+        glide.load(path).asBitmap()
                 .placeholder(Color.parseColor(color1))
                 .error(Color.parseColor(color2))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

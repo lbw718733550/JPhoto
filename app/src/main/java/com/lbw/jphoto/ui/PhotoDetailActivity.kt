@@ -93,8 +93,8 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
             }
         })
 
-        mPresenter.getPhotoDetail(photoId)
-        mPresenter.getPhotoStatistics(photoId)
+        mPresenter.getPhotoDetail(photoId,bindToLifecycle())
+        mPresenter.getPhotoStatistics(photoId,bindToLifecycle())
     }
 
 
@@ -119,7 +119,10 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
 
     override fun OnGetPhotoDetailSuccese(result: PhotoInfo) {
         mPhotoInfo = result
-        ImageLoadUtil.Imageload(this, mPhotoInfo.user.profile_image.large,mPhotoInfo.color,mPhotoInfo.color,userAvatar)
+        try {
+            ImageLoadUtil.Imageload(Glide.with(this), mPhotoInfo.user.profile_image.large,mPhotoInfo.color,mPhotoInfo.color,userAvatar)
+        } catch(e: IllegalArgumentException) {
+        }
         nickName.text = "来自 " + mPhotoInfo.user.name
         photoTime.text = "拍摄于 " + mPhotoInfo.created_at.substring(0, mPhotoInfo.created_at.indexOf("T"))
         detail_size.text = mPhotoInfo.width + "x" + mPhotoInfo.height
@@ -218,5 +221,6 @@ class PhotoDetailActivity : BaseActivity() ,View.OnClickListener,PhotoDetailView
                     }
                 })
     }
+
 
 }

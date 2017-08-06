@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() , MainView{
         mRxPermissions = RxPermissions(this)
         listInit()
         showLoadingDialog()
-        mPresenter.getAllPhotoList(true)
+        mPresenter.getAllPhotoList(true,bindToLifecycle())
 
     }
 
@@ -58,15 +58,15 @@ class MainActivity : BaseActivity() , MainView{
         //SwipeRefreshLayout
         refresh_layout.setColorSchemeResources(R.color.colorPrimaryDark)
         refresh_layout.setOnRefreshListener({
-            mPresenter.getAllPhotoList(false)
+            mPresenter.getAllPhotoList(false,bindToLifecycle())
         })
 
         //RecycleView
         recycle_view.setHasFixedSize(true)
 //        recycle_view.layoutManager = LinearLayoutManager(this)
-//        var staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-//        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE)
-        recycle_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        var staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        staggeredGridLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        recycle_view.layoutManager = staggeredGridLayoutManager
         mAdapter = Recycle_MainAdapter(this, R.layout.item_main_photo, R.layout.item_footview, mList)
         recycle_view.adapter = mAdapter
 
@@ -76,7 +76,7 @@ class MainActivity : BaseActivity() , MainView{
         recycle_view.setLoadingData(object :LoadMoreRecycleView.LoadingData{
             override fun onLoadMore() {
                 mAdapter.changeMoreStatus(mAdapter.LOADING_MORE)
-                mPresenter.loadMorePhotoList()
+                mPresenter.loadMorePhotoList(bindToLifecycle())
             }
         })
 

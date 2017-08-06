@@ -1,6 +1,7 @@
 package com.lbw.jphoto.service
 
 import io.reactivex.Observer
+import io.reactivex.annotations.NonNull
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.ResourceObserver
 import okhttp3.ResponseBody
@@ -11,7 +12,7 @@ import okhttp3.ResponseBody
 abstract class HttpResultObserver<T> : ResourceObserver<T>() {
 
 
-    override fun onError(e: Throwable?) {
+    override fun onError(@NonNull e: Throwable) {
                 _onError(e!!)
     }
 
@@ -23,7 +24,7 @@ abstract class HttpResultObserver<T> : ResourceObserver<T>() {
     }
 
 
-    override fun onNext(t: T?) {
+    override fun onNext(@NonNull t: T) {
             onSuccess(t!!)
     }
 
